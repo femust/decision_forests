@@ -44,7 +44,7 @@ def main():
     patch_size = 16
     patch_sampler = PatchSampler(
         images_train, labels_train, class_colors, patch_size)
-    patch_sampler.extractpatches()
+    patches = patch_sampler.extractpatches()
 
 
 # provide your implementation for the sheet 2 here

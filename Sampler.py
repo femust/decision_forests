@@ -23,10 +23,15 @@ class PatchSampler():
             train_img = mpimg.imread(self.train_images_list[index_train_image])
             label_img = mpimg.imread(
                 self.gt_segmentation_maps_list[index_train_image])
+            # we don't care about last pixels of photos
+            patches_in_x = int(train_img.shape[1] / self.patchsize)
+            patches_in_y = int(train_img.shape[0] / self.patchsize)
+            for x in np.arange(patches_in_x):
+                for y in np.arange(patches_in_y):
+                    patch_img = train_img[x*self.patchsize: (x+1)*self.patchsize,
+                                          y*self.patchsize: (y + 1)*self.patchsize]
+                    patch_label = label_img[x*self.patchsize: (x+1)*self.patchsize,
+                                            y*self.patchsize: (y + 1)*self.patchsize]
+                    patches.append((patch_img, patch_label))
 
-            plt.imshow(train_img)
-            plt.show()
-            plt.imshow(label_img)
-            plt.show()
-
-            # feel free to add any helper functions
+        return patches
