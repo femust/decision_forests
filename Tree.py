@@ -13,6 +13,7 @@ class DecisionTree():
         self.minimum_patches_at_leaf = tree_param['minimum_patches_at_leaf']
         self.classes = tree_param['classes']
         self.nodes = []
+        self.patch_dim = self.patches[0].shape[0]
 
     # Function to train the tree
     # provide your implementation
@@ -42,7 +43,7 @@ class DecisionTree():
     # provide your implementation
     # should return a random location inside the patch
     def generate_random_pixel_location(self):
-        pass
+        return np.random.randint(self.patch_dim*self.patch_dim)
 
     # Function to compute entropy over incoming class labels
     # provide your implementation
