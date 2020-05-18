@@ -43,7 +43,7 @@ def main():
     print("Labels train files")
     print(labels_train)
 
-    class_colors = [0, 1, 2, 3]
+    class_colors = np.array([0, 1, 2, 3])
     patch_size = 16
     patch_sampler = PatchSampler(
         images_train, labels_train, class_colors, patch_size)
@@ -55,7 +55,7 @@ def main():
     tree_param['random_color_values'] = 0
     tree_param['no_of_thresholds'] = 0
     tree_param['minimum_patches_at_leaf'] = 20
-    tree_param['classes'] = len(class_colors)
+    tree_param['classes'] = class_colors
 
     decision_tree = DecisionTree(patches, labels, tree_param)
     labels2 = np.array([0, 1, 2, 3, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3])

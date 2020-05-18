@@ -47,10 +47,10 @@ class DecisionTree():
     # Function to compute entropy over incoming class labels
     # provide your implementation
     def compute_entropy(self, labels):
-        H = np.zeros(len(self.classes))
+        H = np.zeros(self.classes.shape[0])
         for label_class in self.classes:
-            count = labels[labels == label_class]
-            probability = count / sum(labels)
+            count = np.sum(labels == label_class)
+            probability = count / labels.shape[0]
             H_class = probability * np.log(probability)
             H[label_class] = H_class
         return -np.sum(H)
