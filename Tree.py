@@ -59,7 +59,7 @@ class DecisionTree():
     # provide your implementation
 
     def get_information_gain(self, Entropyleft, Entropyright, EntropyAll, Nall, Nleft, Nright):
-        pass
+        return EntropyAll - Entropyleft * (Nleft/Nall) - Entropyright * (Nright/Nall)
 
     # Function to get the best split for given patches with labels
     # provide your implementation
