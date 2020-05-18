@@ -1,5 +1,7 @@
 from RandomForest import Forest
 from Sampler import PatchSampler
+from Tree import DecisionTree
+
 import numpy as np
 import cv2
 
@@ -40,13 +42,26 @@ def main():
     print(images_train)
     print("Labels train files")
     print(labels_train)
+
     class_colors = [0, 1, 2, 3]
     patch_size = 16
     patch_sampler = PatchSampler(
         images_train, labels_train, class_colors, patch_size)
-    patches = patch_sampler.extractpatches()
+    patches, labels = patch_sampler.extractpatches()
+
+    tree_param = dict()
+    tree_param['depth'] = 15
+    tree_param['pixel_locations'] = 0
+    tree_param['random_color_values'] = 0
+    tree_param['no_of_thresholds'] = 0
+    tree_param['minimum_patches_at_leaf'] = 20
+    tree_param['classes'] = len(class_colors)
+
+    decision_tree = DecisionTree(patches, labels, tree_param)
+    labels2 = np.array([0, 1, 2, 3, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3])
+
+    decision_tree.compute_entropy(labels2)
 
 
 # provide your implementation for the sheet 2 here
-
 main()

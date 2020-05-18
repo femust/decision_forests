@@ -47,10 +47,17 @@ class DecisionTree():
     # Function to compute entropy over incoming class labels
     # provide your implementation
     def compute_entropy(self, labels):
-        pass
+        H = np.zeros(len(self.classes))
+        for label_class in self.classes:
+            count = labels[labels == label_class]
+            probability = count / sum(labels)
+            H_class = probability * np.log(probability)
+            H[label_class] = H_class
+        return -np.sum(H)
 
     # Function to measure information gain for a given split
     # provide your implementation
+
     def get_information_gain(self, Entropyleft, Entropyright, EntropyAll, Nall, Nleft, Nright):
         pass
 
@@ -61,4 +68,3 @@ class DecisionTree():
         pass
 
     # feel free to add any helper functions
-
