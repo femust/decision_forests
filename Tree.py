@@ -33,11 +33,13 @@ class DecisionTree():
     def predict(self, I):
         pixels_in_x = I.shape[1]
         pixels_in_y = I.shape[0]
-        predict_image = np.zeros_like(I)
-        for x in np.arange(pixels_in_x):
-            for y in np.arange(pixels_in_y):
+        predict_image = np.zeros((I.shape[0], I.shape[1]))
+        for x in np.arange(pixels_in_x-self.patchsize):
+            for y in np.arange(pixels_in_y-self.patchsize):
                 patch_img = I[y: y + self.patchsize,
-                              x: y + self.patchsize]
+                              x: x + self.patchsize]
+                if (patch_img.shape[0] != 16 or patch_img.shape[1] != 16):
+                    print("img patch" + str(patch_img.shape))
                 mid_point_y = int(y + self.patchsize/2)
                 mid_point_x = int(x + self.patchsize/2)
                 predict_image[mid_point_y,

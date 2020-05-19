@@ -53,7 +53,7 @@ def main():
 
     tree_param = dict()
     tree_param['depth'] = 20
-    tree_param['pixel_locations'] = 5
+    tree_param['pixel_locations'] = 100
     tree_param['random_color_values'] = 10
     tree_param['no_of_thresholds'] = 50
     tree_param['minimum_patches_at_leaf'] = 20

@@ -129,10 +129,12 @@ class Node():
     # provide your implementation
     # should return left,right split, color, pixel location and threshold
     def best_split(self, patches, labels):
-        max_information_gain = 0
-        threshold_max_information_gain = 0
-        color_max_information_gain = 0
+        max_information_gain = 0.0
+        threshold_max_information_gain = 0.0
+        color_max_information_gain = 0.0
         pixel_location_max_information_gain = np.array([0, 0])
+        max_information_gain_left_split_index = []
+        max_information_gain_right_split_index = []
 
         bin_color_tests = np.random.choice(
             self.colors, self.random_color_values)
@@ -177,7 +179,7 @@ class Node():
                         color_max_information_gain = bin_color_test
                         pixel_location_max_information_gain = pixel_location
         self.feature['color'] = color_max_information_gain
-        self.feature['pixel_lication'] = pixel_location_max_information_gain
+        self.feature['pixel_location'] = pixel_location_max_information_gain
         self.feature['th'] = threshold_max_information_gain
 
         return_left_labels = []
@@ -199,10 +201,17 @@ class Node():
         color = self.feature['color']
         pixel_location = self.feature['pixel_location']
         threshold = self.feature['th']
-
+        print("Color: " + str(color))
+        print("Pixel location: " + str(pixel_location))
+        print("threshold value: " + str(threshold))
+        print("Type: " + str(self.type))
+        print("patch: " + str(patch.shape))
+        if (self.type == "Leaf"):
+            index = np.argmax(self.probabilities)
+            label = self.classes[index]
+            return label
         if (patch[pixel_location[0], pixel_location[1], color] < threshold):
             label = self.leftChild.predict(patch)
         else:
             label = self.rightChild.predict(patch)
-
         return label
