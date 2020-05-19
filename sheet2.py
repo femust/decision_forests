@@ -43,24 +43,21 @@ def main():
     print("Labels train files")
     print(labels_train)
 
-    class_colors = np.array([0, 1, 2, 3])
     patch_size = 16
     patch_sampler = PatchSampler(
-        images_train, labels_train, class_colors, patch_size)
+        images_train, labels_train, patch_size)
     patches, labels = patch_sampler.extractpatches()
 
     tree_param = dict()
-    tree_param['depth'] = 15
-    tree_param['pixel_locations'] = 0
-    tree_param['random_color_values'] = 0
-    tree_param['no_of_thresholds'] = 0
+    tree_param['depth'] = 20
+    tree_param['pixel_locations'] = 5
+    tree_param['random_color_values'] = 10
+    tree_param['no_of_thresholds'] = 50
     tree_param['minimum_patches_at_leaf'] = 20
-    tree_param['classes'] = class_colors
+    tree_param['classes'] = np.array([0, 1, 2, 3])
 
     decision_tree = DecisionTree(patches, labels, tree_param)
-    labels2 = np.array([0, 1, 2, 3, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3])
-
-    decision_tree.compute_entropy(labels2)
+    decision_tree.train()
 
 
 # provide your implementation for the sheet 2 here

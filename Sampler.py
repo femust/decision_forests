@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 
 
 class PatchSampler():
-    def __init__(self, train_images_list, gt_segmentation_maps_list, classes_colors, patchsize):
+    def __init__(self, train_images_list, gt_segmentation_maps_list, patchsize):
         assert(len(train_images_list) == len(gt_segmentation_maps_list))
         self.train_images_list = train_images_list
         self.gt_segmentation_maps_list = gt_segmentation_maps_list
-        self.class_colors = classes_colors
+        #self.class_colors = classes_colors
         self.patchsize = patchsize
 
     # Function for sampling patches for each class
@@ -30,12 +30,10 @@ class PatchSampler():
             patches_in_y = int(train_img.shape[0] / self.patchsize)
             for x in np.arange(patches_in_x):
                 for y in np.arange(patches_in_y):
-                    # print(str(x*self.patchsize + self.patchsize/2) +
-                    #      " " + str(y*self.patchsize + self.patchsize/2))
                     patch_img = train_img[y * self.patchsize:(y + 1) * self.patchsize,
                                           x*self.patchsize: (x+1)*self.patchsize]
-                    patch_label = label_img[int(
-                        y*self.patchsize + self.patchsize/2), int(x*self.patchsize + self.patchsize/2)]
+                    patch_label = label_img[y * self.patchsize:(y + 1) * self.patchsize,
+                                            x*self.patchsize: (x+1)*self.patchsize]
                     patches.append(patch_img)
                     labels.append(patch_label)
 
