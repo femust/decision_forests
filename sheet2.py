@@ -32,9 +32,12 @@ def read_file(file_name):
 
 def main():
     path_training_data = "./images/train_images.txt"
-    #path_test_data = "./images/test_images.txt"
+    path_test_data = "./images/test_images.txt"
+
     images_train, labels_train, number_images_classes_train = read_file(
         path_training_data)
+    images_test, labels_test, number_images_classes_test = read_file(
+        path_test_data)
 
     print("Number of train imgs: " +
           str(number_images_classes_train[0]) + " number of classes : " + str(number_images_classes_train[1]))
@@ -58,6 +61,12 @@ def main():
 
     decision_tree = DecisionTree(patches, labels, tree_param)
     decision_tree.train()
+
+    for image_test in images_test:
+        image_test = mpimg.imread(image_test)
+        image = decision_tree.predict(image_test)
+        plt.imshow(image)
+        plt.show()
 
 
 # provide your implementation for the sheet 2 here

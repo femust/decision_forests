@@ -40,6 +40,7 @@ class Node():
     # provide your implementation
 
     def create_leafNode(self, labels, classes):
+        print("creating leaf node")
         self.type = 'Leaf'
         self.leftChild = -1
         self.rightChild = -1
@@ -108,7 +109,7 @@ class Node():
         probabilities = np.zeros(self.classes.shape[0])
         for label_class in self.classes:
             count = np.sum(labels == label_class)
-            print("for: " + str(label_class) + " I found " + str(count))
+            #print("for: " + str(label_class) + " I found " + str(count))
             probability = count / labels.shape[0]
             if (count == 0):
                 H_class = 0
@@ -149,26 +150,26 @@ class Node():
                     entropy = self.compute_entropy(label_random_pixel_location)
                     left_split_index, right_split_index = self.getsplit(
                         responses, threshold)
-                    print("Left size has: " + str(
-                        len(left_split_index)) + " right side has: " + str(len(right_split_index)))
+                    # print("Left size has: " + str(
+                    #   len(left_split_index)) + " right side has: " + str(len(right_split_index)))
                     if (len(left_split_index) == 0 or len(right_split_index) == 0):
-                        print("There is no point to split")
+                     #   print("There is no point to split")
                         continue
                     left_entropy = self.compute_entropy(
                         label_random_pixel_location[left_split_index])
-                    print("Left entropy: " + str(left_entropy))
+                    #print("Left entropy: " + str(left_entropy))
                     right_entropy = self.compute_entropy(
                         label_random_pixel_location[right_split_index])
-                    print("Right entropy: " + str(right_entropy))
+                    #print("Right entropy: " + str(right_entropy))
                     information_gain = self.get_information_gain(
                         left_entropy, right_entropy,
                         entropy, len(label_random_pixel_location),
                         len(left_split_index), len(right_split_index))
-                    print("Information gain: " + str(information_gain))
+                    #print("Information gain: " + str(information_gain))
                     if (information_gain > max_information_gain):
-                        print("Max_information gain exceeded, replacement")
-                        print("was: " + str(max_information_gain))
-                        print("now: " + str(information_gain))
+                       # print("Max_information gain exceeded, replacement")
+                       # print("was: " + str(max_information_gain))
+                       # print("now: " + str(information_gain))
                         max_information_gain = information_gain
                         max_information_gain_left_split_index = left_split_index
                         max_information_gain_right_split_index = right_split_index
@@ -194,4 +195,14 @@ class Node():
 
         return return_left_labels, return_left_patches, return_right_labels, return_right_patches
 
-    # feel free to add any helper functions
+    def predict(self, patch):
+        color = self.feature['color']
+        pixel_location = self.feature['pixel_location']
+        threshold = self.feature['th']
+
+        if (patch[pixel_location[0], pixel_location[1], color] < threshold):
+            label = self.leftChild.predict(patch)
+        else:
+            label = self.rightChild.predict(patch)
+
+        return label
