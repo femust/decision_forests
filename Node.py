@@ -201,15 +201,13 @@ class Node():
         color = self.feature['color']
         pixel_location = self.feature['pixel_location']
         threshold = self.feature['th']
-        print("Color: " + str(color))
-        print("Pixel location: " + str(pixel_location))
-        print("threshold value: " + str(threshold))
-        print("Type: " + str(self.type))
-        print("patch: " + str(patch.shape))
+        # print("Color: " + str(color))
+        # print("Pixel location: " + str(pixel_location))
+        # print("threshold value: " + str(threshold))
+        # print("Type: " + str(self.type))
+        # print("patch: " + str(patch.shape))
         if (self.type == "Leaf"):
-            index = np.argmax(self.probabilities)
-            label = self.classes[index]
-            return label
+            return self.probabilities
         if (patch[pixel_location[0], pixel_location[1], color] < threshold):
             label = self.leftChild.predict(patch)
         else:
