@@ -42,9 +42,9 @@ class DecisionTree():
                     print("img patch" + str(patch_img.shape))
                 mid_point_y = int(y + self.patchsize/2)
                 mid_point_x = int(x + self.patchsize/2)
+                index = np.argmax(self.predict_from_tree(patch_img))
                 predict_image[mid_point_y,
-                              mid_point_x] = self.predict_from_tree(patch_img)
-
+                              mid_point_x] = self.classes[index]
         return predict_image
 
     def predict_from_tree(self, patch):
